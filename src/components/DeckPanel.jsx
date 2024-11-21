@@ -1,8 +1,21 @@
+
+
+import { useEffect, useState } from "react";
+
+
+
 function DeckPanel() {
+    
+ 
+   
+
+    const AddToDeck = (card) => {
+        console.log("Добавлено в колоду:", card.name); // Заглушка, замените на реальную логику
+      };
    return <div className="content">
         <div id="cardsContainer">
             <h1 className='contentHeader'>
-                REPLACE WITH ACTUAL CONTENT
+            
             </h1>
         </div>
     </div>
