@@ -1,7 +1,7 @@
-import { useState } from "react";
 
-function DeckPanel({ children }) {
-  const [deck, setDeck] = useState([]); // Управление колодой
+
+function DeckPanel({ children,  deck, setDeck }) {
+
 
   const AddToDeck = (card) => {
     setDeck((prevDeck) => {
@@ -15,7 +15,7 @@ function DeckPanel({ children }) {
             c.id === card.id ? { ...c, count: c.count + 1 } : c
           );
         }
-        return prevDeck; // Лимит достигнут
+        return prevDeck; 
       } else {
         return [...prevDeck, { ...card, count: 1 }];
       }
@@ -24,19 +24,29 @@ function DeckPanel({ children }) {
 
   const removeFromDeck = (card) => {
     setDeck((prevDeck) => {
+      // Найти индекс карты в текущей колоде
       const cardIndex = prevDeck.findIndex((c) => c.id === card.id);
-      if (cardIndex === -1) return prevDeck;
-
+      if (cardIndex === -1) return prevDeck; // Если карта не найдена, возвращаем колоду без изменений
+  
+      // Создаем копию текущей колоды
       const updatedDeck = [...prevDeck];
-      if (updatedDeck[cardIndex].count > 1) {
-        updatedDeck[cardIndex].count--;
+  
+      // Создаем копию карты для обновления
+      const updatedCard = { ...updatedDeck[cardIndex] };
+  
+      if (updatedCard.count > 1) {
+        updatedCard.count--; // Уменьшаем количество карт
+        updatedDeck[cardIndex] = updatedCard; // Обновляем карту в массиве
       } else {
-        updatedDeck.splice(cardIndex, 1);
+        updatedDeck.splice(cardIndex, 1); // Удаляем карту из колоды, если она последняя
       }
-      return updatedDeck;
+  
+      return updatedDeck; // Возвращаем обновленную колоду
     });
   };
-
+  
+  console.log(deck)
+  console.log(setDeck)
   return (
     <div className="content">
       <h2>Deck</h2>
